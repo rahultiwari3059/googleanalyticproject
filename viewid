@@ -1,0 +1,8 @@
+VIEW_ID = "109302262"
+Response: {"reports":[{"columnHeader":{"dimensions":["ga:sessionDurationBucket"],"metricHeader":{"metricHeaderEntries":[{"name":"sessions","type":"INTEGER"}]}},"data":{"maximums":[{"values":["4"]}],"minimums":[{"values":["1"]}],"rowCount":2,"rows":[{"dimensions":["0"],"metrics":[{"values":["4"]}]},{"dimensions":["1507"],"metrics":[{"values":["1"]}]}],"totals":[{"values":["5"]}]}}]}
+
+
+header is :{"dimensions":["ga:sessionDurationBucket"],"metricHeader":{"metricHeaderEntries":[{"name":"sessions","type":"INTEGER"}]}}
+dimensionHeaders is :[ga:sessionDurationBucket]
+metricHeaders is :[{"name":"sessions","type":"INTEGER"}]
+rows:[{"dimensions":["0"],"metrics":[{"values":["4"]}]}, {"dimensions":["1507"],"metrics":[{"values":["1"]}]}]
