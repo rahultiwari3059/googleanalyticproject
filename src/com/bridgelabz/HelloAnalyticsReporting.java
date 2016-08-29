@@ -120,7 +120,7 @@ public class HelloAnalyticsReporting {
    * @param response the Analytics Reporting API V4 response.
    */
   private static void printResponse(GetReportsResponse response) {
-	System.out.println("Response: "+response);
+	System.out.println(response);
 	
     for (Report report: response.getReports()) {
       ColumnHeader header = report.getColumnHeader();
