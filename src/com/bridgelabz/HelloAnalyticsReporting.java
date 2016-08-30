@@ -26,7 +26,7 @@ import com.google.api.services.analyticsreporting.v4.model.ReportRequest;
 import com.google.api.services.analyticsreporting.v4.model.ReportRow;
 
 public class HelloAnalyticsReporting {
-  private static final String APPLICATION_NAME = "AppyGAReports";
+  private static final String APPLICATION_NAME = "Appystore";
   private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
   private static final String KEY_FILE_LOCATION = "/home/bridgeit/Desktop/springexp/HelloAnalytics/AppyGAReports-35a6c523765c.p12";
   private static final String SERVICE_ACCOUNT_EMAIL = "appystorereport@appygareports.iam.gserviceaccount.com";
@@ -124,13 +124,13 @@ public class HelloAnalyticsReporting {
 	
     for (Report report: response.getReports()) {
       ColumnHeader header = report.getColumnHeader();
-      System.out.println(header);
+    //  System.out.println(header);
       List<String> dimensionHeaders = header.getDimensions();
-      System.out.println(dimensionHeaders);
+    //  System.out.println(dimensionHeaders);
       List<MetricHeaderEntry> metricHeaders = header.getMetricHeader().getMetricHeaderEntries();
-      System.out.println(metricHeaders);
+      //System.out.println(metricHeaders);
       List<ReportRow> rows = report.getData().getRows();
-      System.out.println(rows);
+      //System.out.println(rows);
 
       if (rows == null) {
          System.out.println("No data found for " + VIEW_ID);
@@ -143,6 +143,7 @@ public class HelloAnalyticsReporting {
         List<DateRangeValues> metrics = row.getMetrics();
         for (int i = 0; i < dimensionHeaders.size() && i < dimensions.size(); i++) {
           System.out.println(dimensionHeaders.get(i) + ": " + dimensions.get(i));
+          
         }
 
         for (int j = 0; j < metrics.size(); j++) {
