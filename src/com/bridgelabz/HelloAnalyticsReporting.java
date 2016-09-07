@@ -1,6 +1,12 @@
 package com.bridgelabz;
+import com.bridgelabz.*;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +32,8 @@ import com.google.api.services.analyticsreporting.v4.model.ReportRequest;
 import com.google.api.services.analyticsreporting.v4.model.ReportRow;
 
 public class HelloAnalyticsReporting {
-  private static final String APPLICATION_NAME = "Appystore";
+	static Util u;
+  private static final String APPLICATION_NAME = "AppyStore";
   private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
   private static final String KEY_FILE_LOCATION = "/home/bridgeit/Desktop/springexp/HelloAnalytics/AppyGAReports-35a6c523765c.p12";
   private static final String SERVICE_ACCOUNT_EMAIL = "appystorereport@appygareports.iam.gserviceaccount.com";
@@ -34,15 +41,14 @@ public class HelloAnalyticsReporting {
   public static void main(String[] args) {
     try {
       AnalyticsReporting service = initializeAnalyticsReporting();
-
       GetReportsResponse response = getReport(service);
       printResponse(response);
-    } catch (Exception e) {
+    
+       } catch (Exception e) {
       e.printStackTrace();
     }
   }
- 
-  /**
+  /**OUR_API_KEY
    * Initializes an authorized Analytics Reporting service object.
    *
    * @return The analytics reporting service object.
@@ -51,7 +57,7 @@ public class HelloAnalyticsReporting {
    */
   private static AnalyticsReporting initializeAnalyticsReporting() throws GeneralSecurityException, IOException {
 
-    HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+   HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     GoogleCredential credential = new GoogleCredential.Builder()
         .setTransport(httpTransport)
         .setJsonFactory(JSON_FACTORY)
@@ -59,16 +65,20 @@ public class HelloAnalyticsReporting {
         .setServiceAccountPrivateKeyFromP12File(new File(KEY_FILE_LOCATION))
         .setServiceAccountScopes(AnalyticsReportingScopes.all())
         .build();
-    if (!credential.refreshToken()) {
+        //getting access token
+    	String refreshToken = null;
+    	credential.setRefreshToken(refreshToken);
+    	credential.refreshToken();
+        //printing 
+    	 Util u= new Util();
+    	  System.out.println(u.callURL("https://www.googleapis.com/analytics/v3/management/segments?max-results=3&start-index=1&key=SRvcnEEyfsyNZXEi86VA-1NH&access_token="+credential.getAccessToken()));
+    	if (!credential.refreshToken()) {
         throw new RuntimeException("Failed OAuth to refresh the token");
       }
-
-
-    // Construct the Analytics Reporting service object.
-    return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, credential)
+      //Construct the Analytics Reporting service object.
+        return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, credential)
         .setApplicationName(APPLICATION_NAME).build();
   }
-
   /**
    * Query the Analytics Reporting API V4.
    * Constructs a request for the sessions for the past seven days.
@@ -83,77 +93,66 @@ public class HelloAnalyticsReporting {
     DateRange dateRange = new DateRange();
     dateRange.setStartDate("7DaysAgo");
     dateRange.setEndDate("today");
-
     // Create the Metrics object.
     Metric sessions = new Metric()
         .setExpression("ga:sessions")
         .setAlias("sessions");
-
     //Create the Dimensions object.
     Dimension browser = new Dimension()
         .setName("ga:sessionDurationBucket");
-
     // Create the ReportRequest object.
     ReportRequest request = new ReportRequest()
         .setViewId(VIEW_ID)
         .setDateRanges(Arrays.asList(dateRange))
         .setDimensions(Arrays.asList(browser))
         .setMetrics(Arrays.asList(sessions));
-
     ArrayList<ReportRequest> requests = new ArrayList<ReportRequest>();
     requests.add(request);
-
     // Create the GetReportsRequest object.
     GetReportsRequest getReport = new GetReportsRequest()
         .setReportRequests(requests);
-
     // Call the batchGet method.
     GetReportsResponse response = service.reports().batchGet(getReport).execute();
-
-    // Return the response.
+// Return the response.
     return response;
   }
-
-  /**
+ /**
    * Parses and prints the Analytics Reporting API V4 response.
    *
    * @param response the Analytics Reporting API V4 response.
    */
   private static void printResponse(GetReportsResponse response) {
 	System.out.println(response);
-	
-    for (Report report: response.getReports()) {
+	Util u = new Util();
+	 GetReportsResponse k2 = response;
+    for (Report report: response.getReports()) {	
       ColumnHeader header = report.getColumnHeader();
-    //  System.out.println(header);
       List<String> dimensionHeaders = header.getDimensions();
-    //  System.out.println(dimensionHeaders);
       List<MetricHeaderEntry> metricHeaders = header.getMetricHeader().getMetricHeaderEntries();
-      //System.out.println(metricHeaders);
       List<ReportRow> rows = report.getData().getRows();
-      //System.out.println(rows);
-
       if (rows == null) {
          System.out.println("No data found for " + VIEW_ID);
          return;
       }
-
-      for (ReportRow row: rows) {
+    for (ReportRow row: rows) {
         List<String> dimensions = row.getDimensions();
         System.out.println(dimensions);
         List<DateRangeValues> metrics = row.getMetrics();
         for (int i = 0; i < dimensionHeaders.size() && i < dimensions.size(); i++) {
-          System.out.println(dimensionHeaders.get(i) + ": " + dimensions.get(i));
-          
-        }
-
+        	System.out.println(dimensionHeaders.get(i) + ": " + dimensions.get(i));
+         }
         for (int j = 0; j < metrics.size(); j++) {
-          System.out.print("Date Range (" + j + "): ");
+        	System.out.print("Date Range (" + j + "): ");
           com.google.api.services.analyticsreporting.v4.model.DateRangeValues values = metrics.get(j);
           for (int k = 0; k < values.getValues().size() && k < metricHeaders.size(); k++) {
-            System.out.println(metricHeaders.get(k).getName() + ": " + values.getValues().get(k));
+        	  System.out.println(metricHeaders.get(k).getName() + ": " + values.getValues().get(k));
+        	  u.postResponse(k2.toString());
           }
         }
       }
     }
   }
-}
+
+} 
+
+

@@ -1,0 +1,1 @@
+{"Name":"AppOpenData","metrics":"ga:totalEvents","dimention8":["application session id","application connection type"],"dimensions":["ga:eventCategory","ga:date","ga:dimension1"],"filters":["ga:eventCategory==App Open","ga:dimension15==10"]}
