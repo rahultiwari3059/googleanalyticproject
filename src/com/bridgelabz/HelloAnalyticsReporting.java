@@ -30,6 +30,7 @@ import com.google.api.services.analyticsreporting.v4.model.MetricHeaderEntry;
 import com.google.api.services.analyticsreporting.v4.model.Report;
 import com.google.api.services.analyticsreporting.v4.model.ReportRequest;
 import com.google.api.services.analyticsreporting.v4.model.ReportRow;
+import com.sun.net.httpserver.Filter;
 
 public class HelloAnalyticsReporting {
 	static Util u;
@@ -43,6 +44,7 @@ public class HelloAnalyticsReporting {
       AnalyticsReporting service = initializeAnalyticsReporting();
       GetReportsResponse response = getReport(service);
       printResponse(response);
+     
     
        } catch (Exception e) {
       e.printStackTrace();
@@ -69,6 +71,8 @@ public class HelloAnalyticsReporting {
     	String refreshToken = null;
     	credential.setRefreshToken(refreshToken);
     	credential.refreshToken();
+    	//printing access token
+    	//System.out.println(credential.getAccessToken());
         //printing 
     	 Util u= new Util();
     	  System.out.println(u.callURL("https://www.googleapis.com/analytics/v3/management/segments?max-results=3&start-index=1&key=SRvcnEEyfsyNZXEi86VA-1NH&access_token="+credential.getAccessToken()));
@@ -91,21 +95,23 @@ public class HelloAnalyticsReporting {
   private static GetReportsResponse getReport(AnalyticsReporting service) throws IOException {
     // Create the DateRange object.
     DateRange dateRange = new DateRange();
-    dateRange.setStartDate("7DaysAgo");
+    dateRange.setStartDate("7daysAgo");
     dateRange.setEndDate("today");
     // Create the Metrics object.
     Metric sessions = new Metric()
-        .setExpression("ga:sessions")
-        .setAlias("sessions");
-    //Create the Dimensions object.
-    Dimension browser = new Dimension()
-        .setName("ga:sessionDurationBucket");
+     .setExpression("ga:bounces")
+     .setExpression("ga:totalEvents")
+     .setExpression("ga:hits")
+     .setAlias("sessions");
+     //Create the Dimensions object.
+    Dimension sessionDurationBucket = new Dimension()
+     .setName("ga:sessionDurationBucket");
     // Create the ReportRequest object.
     ReportRequest request = new ReportRequest()
         .setViewId(VIEW_ID)
         .setDateRanges(Arrays.asList(dateRange))
-        .setDimensions(Arrays.asList(browser))
-        .setMetrics(Arrays.asList(sessions));
+        .setDimensions(Arrays.asList(sessionDurationBucket))
+     .setMetrics(Arrays.asList(sessions));
     ArrayList<ReportRequest> requests = new ArrayList<ReportRequest>();
     requests.add(request);
     // Create the GetReportsRequest object.
@@ -113,7 +119,8 @@ public class HelloAnalyticsReporting {
         .setReportRequests(requests);
     // Call the batchGet method.
     GetReportsResponse response = service.reports().batchGet(getReport).execute();
-// Return the response.
+    // Return the response.
+    
     return response;
   }
  /**
@@ -146,7 +153,9 @@ public class HelloAnalyticsReporting {
           com.google.api.services.analyticsreporting.v4.model.DateRangeValues values = metrics.get(j);
           for (int k = 0; k < values.getValues().size() && k < metricHeaders.size(); k++) {
         	  System.out.println(metricHeaders.get(k).getName() + ": " + values.getValues().get(k));
-        	  u.postResponse(k2.toString());
+        	  //calling util method to read json
+        	 u.postResponse(k2.toString());
+
           }
         }
       }
@@ -154,5 +163,3 @@ public class HelloAnalyticsReporting {
   }
 
 } 
-
-

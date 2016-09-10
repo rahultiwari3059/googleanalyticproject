@@ -86,7 +86,8 @@ private static AnalyticsReporting initializeAnalyticsReporting() throws GeneralS
    * @throws IOException
    */
   private static GetReportsResponse getReport(AnalyticsReporting service) throws IOException {
-    // Create the DateRange object.
+   
+	 // Create the DateRange object.
     DateRange dateRange = new DateRange();
     dateRange.setStartDate("7DaysAgo");
     dateRange.setEndDate("today");
@@ -138,6 +139,7 @@ private static AnalyticsReporting initializeAnalyticsReporting() throws GeneralS
          System.out.println("No data found for " + VIEW_ID);
          return;
       }
+      //System.out.println(rows);
       for (ReportRow row: rows) {
         List<String> dimensions = row.getDimensions();
         System.out.println(dimensions);
