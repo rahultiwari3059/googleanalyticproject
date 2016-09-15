@@ -7,4 +7,3 @@ public static void main(String[] args)
 	u.reader("/home/bridgeit/Desktop/springexp/HelloAnalytics/AppOpenData.JSON");
 }
 }
-

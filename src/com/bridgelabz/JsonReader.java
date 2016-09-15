@@ -14,7 +14,7 @@ public class JsonReader
 		  JSONParser parser = new JSONParser();  
 		  try {  
 			  
-			   Object obj = parser.parse(new FileReader("/home/bridgeit/Desktop/springexp/HelloAnalytics/Test.JSON"));  
+			   Object obj = parser.parse(new FileReader("/home/bridgeit/Music/screensplash.JSON"));  
 			   JSONObject jsonObject = (JSONObject) obj;
 			   //printing json content
 			   System.out.println(jsonObject);

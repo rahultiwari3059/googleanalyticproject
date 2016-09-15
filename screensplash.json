@@ -1,0 +1,101 @@
+{
+  "kind": "analytics#gaData",
+  "id": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:109302262&dimensions=ga:date&metrics=ga:bounces,ga:totalEvents,ga:hits&filters=ga:screenName%3D%3DSplashScreen&start-date=7daysAgo&end-date=yesterday",
+  "query": {
+    "start-date": "7daysAgo",
+    "end-date": "yesterday",
+    "ids": "ga:109302262",
+    "dimensions": "ga:date",
+    "metrics": [
+      "ga:bounces",
+      "ga:totalEvents",
+      "ga:hits"
+    ],
+    "filters": "ga:screenName==SplashScreen",
+    "start-index": 1,
+    "max-results": 1000
+  },
+  "itemsPerPage": 1000,
+  "totalResults": 7,
+  "selfLink": "https://www.googleapis.com/analytics/v3/data/ga?ids=ga:109302262&dimensions=ga:date&metrics=ga:bounces,ga:totalEvents,ga:hits&filters=ga:screenName%3D%3DSplashScreen&start-date=7daysAgo&end-date=yesterday",
+  "profileInfo": {
+    "profileId": "109302262",
+    "accountId": "48153383",
+    "webPropertyId": "UA-48153383-1",
+    "internalWebPropertyId": "79625231",
+    "profileName": "Appystore test app",
+    "tableId": "ga:109302262"
+  },
+  "containsSampledData": false,
+  "columnHeaders": [
+    {
+      "name": "ga:date",
+      "columnType": "DIMENSION",
+      "dataType": "STRING"
+    },
+    {
+      "name": "ga:bounces",
+      "columnType": "METRIC",
+      "dataType": "INTEGER"
+    },
+    {
+      "name": "ga:totalEvents",
+      "columnType": "METRIC",
+      "dataType": "INTEGER"
+    },
+    {
+      "name": "ga:hits",
+      "columnType": "METRIC",
+      "dataType": "INTEGER"
+    }
+  ],
+  "totalsForAllResults": {
+    "ga:bounces": "0",
+    "ga:totalEvents": "0",
+    "ga:hits": "0"
+  },
+  "rows": [
+    [
+      "20160906",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "20160907",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "20160908",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "20160909",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "20160910",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "20160911",
+      "0",
+      "0",
+      "0"
+    ],
+    [
+      "20160912",
+      "0",
+      "0",
+      "0"
+    ]
+  ]
+}

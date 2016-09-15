@@ -1,0 +1,9 @@
+{"reports":[{"columnHeader":{"dimensions":["ga:dimension1","ga:date"],"metricHeader":{"metricHeaderEntries":[{"name":"ga:totalEvents","type":"INTEGER"},{"name":"ga:screenviews","type":"INTEGER"},{"name":"ga:exits","type":"INTEGER"},{"name":"ga:exitRate","type":"PERCENT"}]}},"data":{"isDataGolden":true,"totals":[{"values":["0","0","0","0.0"]}]}}]}
+ga:111820853
+
+https://www.googleapis.com/analytics/v3/data/ga?ids=ga%3A111820853&start-date=2016-09-02&end-date=2016-09-05&metrics=ga%3AtotalEvents&dimensions=ga%3AeventCategory%2Cga%3Adimension1%2Cga%3Adate&filters=ga%3AeventCategory%3D%3DApp%20Open%3Bga%3Adimension15%3D%3D10&access_token=ya29.CjBfAx3vjhnOzWXtQwFQtomcVzZ8l4BS-xE3F3zPvSnXIrX9jO5QB-fdPgLsE5klKc8
+/////////////////
+https://www.googleapis.com/analytics/v3/data/ga?ids=ga%3A111820853&start-date=2016-09-02&end-date=2016-09-05&metrics=ga%3AtotalEvents&dimensions=ga%3AeventCategory%2Cga%3Adimension1%2Cga%3Adate&filters=ga%3AeventCategory%3D%3DApp%20Open%3Bga%3Adimension15%3D%3D10&access_token=ya29.CjBfA7N7Hlqtg2vw8XS9nXqQst7ICwEKyj9h0QRZI5yi3FVVG7zKReB-OuMo6kqLox8
+//////////////////////////////
+
+

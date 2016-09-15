@@ -12,10 +12,14 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential.Builder;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
+import com.google.api.services.analytics.Analytics;
+import com.google.api.services.analytics.model.GaData;
+import com.google.api.services.analytics.model.GaData.ColumnHeaders;
 import com.google.api.services.analyticsreporting.v4.AnalyticsReporting;
 import com.google.api.services.analyticsreporting.v4.AnalyticsReportingScopes;
 import com.google.api.services.analyticsreporting.v4.model.ColumnHeader;
@@ -40,10 +44,12 @@ public class HelloAnalyticsReport1 {
   private static final String VIEW_ID = "109302262";
   public static void main(String[] args) {
     try {
-      AnalyticsReporting service = initializeAnalyticsReporting();
-
-      GetReportsResponse response = getReport(service);
-      printResponse(response);
+      Analytics service = initializeAnalyticsReporting();
+     // GetReportsResponse response = getReport(service);
+     // printResponse(response);
+      String profileId="109302262";
+      GaData gaData = executeDataQuery(service, profileId);
+      printGaData(gaData);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -56,7 +62,7 @@ public class HelloAnalyticsReport1 {
    * @throws IOException
    * @throws GeneralSecurityException
    */
-private static AnalyticsReporting initializeAnalyticsReporting() throws GeneralSecurityException, IOException {
+private static Analytics initializeAnalyticsReporting() throws GeneralSecurityException, IOException {
 
     HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     GoogleCredential credential = new GoogleCredential.Builder()
@@ -72,7 +78,7 @@ private static AnalyticsReporting initializeAnalyticsReporting() throws GeneralS
 
 
     // Construct the Analytics Reporting service object.
-    return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, credential)
+    return new Analytics.Builder(httpTransport, JSON_FACTORY, credential)
         .setApplicationName(APPLICATION_NAME).build();
   }
 
@@ -85,7 +91,58 @@ private static AnalyticsReporting initializeAnalyticsReporting() throws GeneralS
    * @return GetReportResponse
    * @throws IOException
    */
-  private static GetReportsResponse getReport(AnalyticsReporting service) throws IOException {
+
+private static GaData executeDataQuery(Analytics analytics, String profileId) throws IOException {
+    return analytics.data().ga().get("ga:" + profileId, // Table Id. ga: + profile id.
+        "2012-08-27", // Start date.
+        "2012-09-07", // End date.
+        "ga:visits") // Metrics.
+        .setDimensions("ga:sessions,ga:screenviews,ga:exits,ga:exitRate")
+        .setSort("-ga:visits,ga:source")
+        .setFilters("ga:screenName==SplashScreen")
+        .setMaxResults(25)
+        .execute();
+  }
+
+private static void printGaData(GaData results) {
+    System.out.println(
+        "printing results for profile: " + results.getProfileInfo().getProfileName());
+
+    if (results.getRows() == null || results.getRows().isEmpty()) {
+      System.out.println("No results Found.");
+    } else {
+
+      // Print column headers.
+      for (ColumnHeaders header : results.getColumnHeaders()) {
+        System.out.printf("%30s", header.getName());
+      }
+      System.out.println();
+
+      // Print actual data.
+      for (List<String> row : results.getRows()) {
+        for (String column : row) {
+          System.out.printf("%30s", column);
+        }
+        System.out.println();
+      }
+
+      System.out.println();
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+  private static GetReportsResponse getReport(Analytics service) throws IOException {
    
 	 // Create the DateRange object.
     DateRange dateRange = new DateRange();
@@ -121,7 +178,7 @@ private static AnalyticsReporting initializeAnalyticsReporting() throws GeneralS
     // Return the response.
     return response;
   }
-
+*/
   /**
    * Parses and prints the Analytics Reporting API V4 response.
    *

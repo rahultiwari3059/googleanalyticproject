@@ -123,7 +123,7 @@ public class Util {
 						// converting json array to String
 						String session = JSONArray.toJSONString(valuesarray);
 						// retrieving from array
-						session = session.substring(session.indexOf("[") + 2, session.indexOf("[") + 3);
+						session = session.substring(session.indexOf("[") + 2, session.indexOf("]") -1);
 						// printing value
 						System.out.println(session);
 						// printing sessions value
@@ -134,7 +134,7 @@ public class Util {
 						String sessionDurationBuck = JSONArray.toJSONString(dimensionsarray);
 						// retrieving substring from string
 						sessionDurationBuck = sessionDurationBuck.substring(sessionDurationBuck.indexOf("[") + 2,
-								sessionDurationBuck.indexOf("[") + 3);
+								sessionDurationBuck.indexOf("]") - 1);
 						// printing substring
 						System.out.println(sessionDurationBuck);
 						// printing sessiondurationbucket

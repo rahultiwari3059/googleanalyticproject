@@ -81,5 +81,9 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/gdata-analytics-2.0.jar"/>
 	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/gdata-core-1.0-sources.jar"/>
+	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/google-api-services-analytics-v3-rev61-1.15.0-rc-sources.jar"/>
+	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/google-api-services-analytics-v3-rev61-1.13.2-beta.jar"/>
+	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/com.google.guava_1.6.0.jar"/>
+	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/google-http-client-1.17.0-rc.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
