@@ -28,7 +28,6 @@ import com.google.api.services.analyticsreporting.v4.model.Report;
 import com.google.api.services.analyticsreporting.v4.model.ReportRequest;
 import com.google.api.services.analyticsreporting.v4.model.ReportRow;
 
-
 public class HelloAnalyticsReporting {
 	static Util u;
 	private static final String APPLICATION_NAME = "Appystore test app";
@@ -70,8 +69,8 @@ public class HelloAnalyticsReporting {
 		System.out.println(credential.getAccessToken());
 		// printing
 		Util u = new Util();
-		
-		//System.out.println(u.callURL("https://www.googleapis.com/analytics/v3/data/ga?ids=ga%3A111820853&start-date=2016-09-02&end-date=2016-09-05&metrics=ga%3AtotalEvents&dimensions=ga%3AeventCategory%2Cga%3Adimension1%2Cga%3Adate&filters=ga%3AeventCategory%3D%3DApp%20Open%3Bga%3Adimension15%3D%3D10&access_token="+credential.getAccessToken()));
+
+		// System.out.println(u.callURL("https://www.googleapis.com/analytics/v3/data/ga?ids=ga%3A111820853&start-date=2016-09-02&end-date=2016-09-05&metrics=ga%3AtotalEvents&dimensions=ga%3AeventCategory%2Cga%3Adimension1%2Cga%3Adate&filters=ga%3AeventCategory%3D%3DApp%20Open%3Bga%3Adimension15%3D%3D10&access_token="+credential.getAccessToken()));
 
 		if (!credential.refreshToken()) {
 			throw new RuntimeException("Failed OAuth to refresh the token");
@@ -80,6 +79,7 @@ public class HelloAnalyticsReporting {
 		return new AnalyticsReporting.Builder(httpTransport, JSON_FACTORY, credential)
 				.setApplicationName(APPLICATION_NAME).build();
 	}
+
 	/**
 	 * Query the Analytics Reporting API V4. Constructs a request for the
 	 * sessions for the past seven days. Returns the API response.
@@ -96,16 +96,19 @@ public class HelloAnalyticsReporting {
 		dateRange.setEndDate("2016-09-03");
 		// Create the Metrics object.
 		Metric metric1 = new Metric().setExpression("ga:totalEvents");
-	/*	Metric metric2 = new Metric() .setExpression("ga:screenviews");
-		Metric metric3 = new Metric() .setExpression("ga:exits");
-		Metric metric4 = new Metric() .setExpression("ga:exitRate");*/
-		 // adding metric into metric ArrayList
+		/*
+		 * Metric metric2 = new Metric() .setExpression("ga:screenviews");
+		 * Metric metric3 = new Metric() .setExpression("ga:exits"); Metric
+		 * metric4 = new Metric() .setExpression("ga:exitRate");
+		 */
+		// adding metric into metric ArrayList
 		ArrayList<Metric> metriclist = new ArrayList<Metric>();
 		metriclist.add(0, metric1);
-	/*	metriclist.add(1,metric2); 
-		metriclist.add(2,metric3);
-		metriclist.add(3,metric4);*/
-		 
+		/*
+		 * metriclist.add(1,metric2); metriclist.add(2,metric3);
+		 * metriclist.add(3,metric4);
+		 */
+
 		// Create the Dimensions object.
 		Dimension dimens = new Dimension();
 		Dimension dimens1 = new Dimension();
@@ -114,33 +117,22 @@ public class HelloAnalyticsReporting {
 		dimensList.add(dimens.setName("ga:eventCategory"));
 		dimensList.add(dimens1.setName("ga:dimension1"));
 		dimensList.add(dimens2.setName("ga:date"));
-		//dimensList.add(dimens.set("ga:eventCategory", metric1));
-	
+
 		// created DimensionFilter object
 		DimensionFilter dimensionFilter = new DimensionFilter();
+		dimensionFilter.setDimensionName("ga:eventCategory").setOperator("EXACT")
+				.setExpressions(Arrays.asList("App Open"));
+		dimensionFilter.setDimensionName("ga:dimension15").setOperator("EXACT").setExpressions(Arrays.asList("10"));
 
-		// creating ArrayList of DimensionFilter
-		
-		  ArrayList<DimensionFilter> dimFilters = new
-		  ArrayList<DimensionFilter>();
-		  dimFilters.add(dimensionFilter.set("ga:eventCategory==App Open", dimensList));
-		  dimFilters.add(dimensionFilter.set("ga:dimension15==10",dimensList));
-		  
-		 //creating DimensionFilterClause object 
-		  DimensionFilterClause  dimensionFilterPathClause = new DimensionFilterClause();
-		  //dimensionFilterPathClause.getFilters();
-		 
-		 //making ArrayList of DimensionFilterClause
-		  ArrayList<DimensionFilterClause> dmfilterclauselist= new ArrayList<DimensionFilterClause>();
-		  //adding dimFilters to it
-		  dmfilterclauselist.add(dimensionFilterPathClause.setFilters(dimFilters));
-	
+		// creating DimensionFilterClause object
+		DimensionFilterClause dimensionFilterPathClause = new DimensionFilterClause();
+		// making ArrayList of DimensionFilterClause
+		ArrayList<DimensionFilterClause> dmfilterclauselist = new ArrayList<DimensionFilterClause>();
+		// adding dimFilters to it
+		dmfilterclauselist.add(dimensionFilterPathClause.setFilters(Arrays.asList(dimensionFilter)));
 		// Create the ReportRequest object.
-		ReportRequest request = new ReportRequest().setViewId(VIEW_ID)
-			.setDateRanges(Arrays.asList(dateRange))
-			.setMetrics(metriclist)
-			.setDimensions(dimensList)
-			.setDimensionFilterClauses(dmfilterclauselist);
+		ReportRequest request = new ReportRequest().setViewId(VIEW_ID).setDateRanges(Arrays.asList(dateRange))
+				.setMetrics(metriclist).setDimensions(dimensList).setDimensionFilterClauses(dmfilterclauselist);
 
 		ArrayList<ReportRequest> requests = new ArrayList<ReportRequest>();
 		requests.add(request);
@@ -163,34 +155,29 @@ public class HelloAnalyticsReporting {
 		System.out.println(response);
 		Util u = new Util();
 		GetReportsResponse k2 = response;
-		for (Report report : response.getReports()) {
-			ColumnHeader header = report.getColumnHeader();
-			List<String> dimensionHeaders = header.getDimensions();
-			List<MetricHeaderEntry> metricHeaders = header.getMetricHeader().getMetricHeaderEntries();
-			List<ReportRow> rows = report.getData().getRows();
-			if (rows == null) {
-				System.out.println("No data found for " + VIEW_ID);
-				return;
-			}
-			for (ReportRow row : rows) {
-				List<String> dimensions = row.getDimensions();
-				System.out.println(dimensions);
-				List<DateRangeValues> metrics = row.getMetrics();
-				for (int i = 0; i < dimensionHeaders.size() && i < dimensions.size(); i++) {
-					System.out.println(dimensionHeaders.get(i) + ": " + dimensions.get(i));
-				}
-				for (int j = 0; j < metrics.size(); j++) {
-					System.out.print("Date Range (" + j + "): ");
-					com.google.api.services.analyticsreporting.v4.model.DateRangeValues values = metrics.get(j);
-					for (int k = 0; k < values.getValues().size() && k < metricHeaders.size(); k++) {
-						System.out.println(metricHeaders.get(k).getName() + ": " + values.getValues().get(k));
-						// calling util method to read json
-						u.postResponse(k2.toString());
-
-					}
-				}
-			}
-		}
+		/*
+		 * for (Report report : response.getReports()) { ColumnHeader header =
+		 * report.getColumnHeader(); List<String> dimensionHeaders =
+		 * header.getDimensions(); List<MetricHeaderEntry> metricHeaders =
+		 * header.getMetricHeader().getMetricHeaderEntries(); List<ReportRow>
+		 * rows = report.getData().getRows(); if (rows == null) {
+		 * System.out.println("No data found for " + VIEW_ID); return; } for
+		 * (ReportRow row : rows) { List<String> dimensions =
+		 * row.getDimensions(); System.out.println(dimensions);
+		 * List<DateRangeValues> metrics = row.getMetrics(); for (int i = 0; i <
+		 * dimensionHeaders.size() && i < dimensions.size(); i++) {
+		 * System.out.println(dimensionHeaders.get(i) + ": " +
+		 * dimensions.get(i)); } for (int j = 0; j < metrics.size(); j++) {
+		 * System.out.print("Date Range (" + j + "): ");
+		 * com.google.api.services.analyticsreporting.v4.model.DateRangeValues
+		 * values = metrics.get(j); for (int k = 0; k <
+		 * values.getValues().size() && k < metricHeaders.size(); k++) {
+		 * System.out.println(metricHeaders.get(k).getName() + ": " +
+		 * values.getValues().get(k)); // calling util method to read json
+		 * //u.postResponse(k2.toString());
+		 * 
+		 * } } } }
+		 */
 	}
 
 }
