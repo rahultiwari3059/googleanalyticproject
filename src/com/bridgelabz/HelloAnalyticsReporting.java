@@ -96,18 +96,22 @@ public class HelloAnalyticsReporting {
 		dateRange.setEndDate("2016-09-03");
 		// Create the Metrics object.
 		Metric metric1 = new Metric().setExpression("ga:totalEvents");
-		/*
-		 * Metric metric2 = new Metric() .setExpression("ga:screenviews");
-		 * Metric metric3 = new Metric() .setExpression("ga:exits"); Metric
-		 * metric4 = new Metric() .setExpression("ga:exitRate");
-		 */
+
+	/*	Metric metric1 = new Metric().setExpression("ga:sessions");
+	 *  Metric metric2 = new Metric() .setExpression("ga:screenviews");
+		 Metric metric3 = new Metric() .setExpression("ga:exits"); 
+		 Metric metric4 = new Metric() .setExpression("ga:exitRate");*/
+		 
+
 		// adding metric into metric ArrayList
 		ArrayList<Metric> metriclist = new ArrayList<Metric>();
 		metriclist.add(0, metric1);
-		/*
-		 * metriclist.add(1,metric2); metriclist.add(2,metric3);
-		 * metriclist.add(3,metric4);
-		 */
+		/*metriclist.add(1,metric2); 
+		metriclist.add(2,metric3);
+		metriclist.add(3,metric4);*/
+
+
+		
 
 		// Create the Dimensions object.
 		Dimension dimens = new Dimension();
@@ -115,14 +119,20 @@ public class HelloAnalyticsReporting {
 		Dimension dimens2 = new Dimension();
 		ArrayList<Dimension> dimensList = new ArrayList<Dimension>();
 		dimensList.add(dimens.setName("ga:eventCategory"));
-		dimensList.add(dimens1.setName("ga:dimension1"));
 		dimensList.add(dimens2.setName("ga:date"));
+		dimensList.add(dimens1.setName("ga:dimension1"));
+		//dimensList.add(dimens1.setName("ga:dimension8"));
 
 		// created DimensionFilter object
 		DimensionFilter dimensionFilter = new DimensionFilter();
-		dimensionFilter.setDimensionName("ga:eventCategory").setOperator("EXACT")
-				.setExpressions(Arrays.asList("App Open"));
+		/*dimensionFilter.setDimensionName("ga:screenName").setOperator("EXACT").setExpressions(Arrays.asList("Product Page"));*/
+		dimensionFilter.setDimensionName("ga:eventCategory").setOperator("EXACT").setExpressions(Arrays.asList("App Reopen"));
 		dimensionFilter.setDimensionName("ga:dimension15").setOperator("EXACT").setExpressions(Arrays.asList("10"));
+		dimensionFilter.setDimensionName("ga:dimension14").setOperator("PARTIAL").setExpressions(Arrays.asList("true"));
+
+
+		
+
 
 		// creating DimensionFilterClause object
 		DimensionFilterClause dimensionFilterPathClause = new DimensionFilterClause();

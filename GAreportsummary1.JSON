@@ -1,0 +1,18 @@
+{
+  "GAReportInfo": [
+    {
+      "GAID": "1",
+      "GAdiscription": "App Open Data",
+      "metric":[ "ga:totalEvents"],
+      "dimension": [
+        "ga:date",
+        "ga:dimension1",
+        "ga:eventCategory"
+      ],
+      "dimensionfilter": [
+        "ga:eventCategory==App Open",
+        "ga:dimension15==10"
+      ]
+    }
+    ]
+}
