@@ -85,5 +85,6 @@
 	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/google-api-services-analytics-v3-rev61-1.13.2-beta.jar"/>
 	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/com.google.guava_1.6.0.jar"/>
 	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/google-http-client-1.17.0-rc.jar"/>
+	<classpathentry kind="lib" path="/home/bridgeit/Desktop/software,jars/analyticsreporting/javax.persistence.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -1,5 +1,4 @@
 package com.bridgelabz;
-
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -7,7 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class GAreportsummary1reader {
+public class GAreportsummaryreader {
 	public static void main(String[] args) {
 		JSONParser parser = new JSONParser();
 		ArrayList<String> dimentionarraylist = new ArrayList<String>();
@@ -15,7 +14,7 @@ public class GAreportsummary1reader {
 		ArrayList<String> dimensionfilterarraylist = new ArrayList<String>();
 		try {
 			Object obj = parser
-					.parse(new FileReader("/home/bridgeit/Desktop/springexp/HelloAnalytics/GAreportsummary1.JSON"));
+					.parse(new FileReader("/home/bridgeit/Desktop/springexp/HelloAnalytics/GAreportsummary.JSON"));
 			// converting object into JSONObject
 			JSONObject jsonObject = (JSONObject) obj;
 		

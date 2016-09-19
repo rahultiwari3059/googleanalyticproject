@@ -28,7 +28,7 @@
         "ga:eventCategory"
       ],
       "dimensionfilter": [
-        "ga:eventCategory==App Reopen",
+        " ga:eventCategory==App Reopen",
         "ga:dimension15==10",
         "dimension14=@:true"
       ]
